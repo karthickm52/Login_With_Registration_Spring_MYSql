@@ -1,0 +1,11 @@
+<header>
+  <nav class="main-nav">   
+    <a href="" class="logo">Kumaran</a>
+    <ul class="navlinks">
+      <li><a *ngIf='auth.isUserLoggedIn()' routerLink="/login">Login</a></li>
+      <li><a *ngIf='auth.isUserLoggedIn()' routerLink="/registration">SignUp</a></li>
+      <li><a *ngIf='auth.isUserLoggedIn()'><button class="btn btn-primary" (click)="logout()">logout</button></a></li>
+
+    </ul>
+  </nav>
+</header>
