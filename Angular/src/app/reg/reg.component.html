@@ -1,69 +1,88 @@
-<div class="row"> 
-  <div class="col-md-12 col-md-offset-3">
-      <form [formGroup]="personalDetails" id="msform">
-          <!-- progressbar -->
-          <ul id="progressbar">
-              <li [ngClass]="step>=1 ? 'active ' : 'inactive'">Personal Details</li>
-              <li [ngClass]="step>=2 ? 'active' : 'inactive'">Social Profiles</li>
-              <li [ngClass]="step==3 ? 'active' : 'inactive'">Account Setup</li>
-          </ul>
-          <!-- fieldsets -->
+<div class="container">
 
-          <fieldset  *ngIf="step == 1" >
-              <h2 class="fs-title">Personal Details</h2>
-              <input type="text" formControlName="name" placeholder="Full Name"/>
-              <!-- <div *ngIf="personal_step && personalDetails.controls.name.errors">
-                  <div *ngIf="personal.name.errors?.required">Name is required</div>
-              </div> -->
-              <input type="text" formControlName="email" name="email" placeholder="Email"/>
-              <!-- <div *ngIf="personal_step && personalDetails.controls.email.errors">
-                <div *ngIf="personal.email.errors?.required">Email is required</div>
-             </div> -->
-              <input type="text" formControlName="phone" name="phone" placeholder="Phone"/>
-              <!-- <div *ngIf="personal_step && personalDetails.controls.phone.errors">
-                <div *ngIf="personal.phone.errors?.required">Phone is required</div>
-            </div> -->
-              <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
-          </fieldset>
-      </form>
-       <form [formGroup]="addressDetails" id="msform">
-          <fieldset *ngIf="step == 2" >
-              <h2 class="fs-title">Address Details</h2>
-              <input type="text" formControlName="city"  placeholder="City"/>
-              <!-- <div *ngIf="address_step && addressDetails.controls.city.errors">
-                  <div *ngIf="address.city.errors?.required">City is required</div>
-              </div> -->
-              <textarea rows="5" cols="5" formControlName="address"  placeholder="address"></textarea>
-              <!-- <div *ngIf="address_step && addressDetails.controls.address.errors">
-                  <div *ngIf="address.address.errors?.required">Address is required</div>
-              </div> -->
-              <input type="text" formControlName="pincode"  placeholder="Pincode"/>
-              <!-- <div *ngIf="address_step && addressDetails.controls.pincode.errors">
-                  <div *ngIf="address.pincode.errors?.required">Pincode is required</div>
-              </div> -->
-              <input (click)="previous()" type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-              <input  (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
-          </fieldset>
-      </form>
-       <form [formGroup]="addressDetails" id="msform">
-          <fieldset *ngIf="step == 3">
-              <h2 class="fs-title">Educational Details</h2>
-              <input type="text" formControlName="highest_qualification" placeholder="Highest Qualification"/>
-              <!-- <div *ngIf="education_step && educationalDetails.controls.highest_qualification.errors">
-                  <div *ngIf="education.highest_qualification.errors?.required">Highest qualification is required</div>
-              </div> -->
-              <input type="text" formControlName="university"  placeholder="University"/>
-              <!-- <div *ngIf="education_step && educationalDetails.controls.university.errors"> -->
-                  <!-- <div *ngIf="education.university.errors?.required">University is required</div>
-              </div> -->
-              <input type="text" formControlName="total_marks" placeholder="Total Marks"/>
-              <!-- <div *ngIf="education_step && educationalDetails.controls.total_marks.errors">
-                  <div *ngIf="education.total_marks.errors?.required">Total marks is required</div>
-              </div> -->
-              <input (click)="previous()" type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-              <input (click)="submit()"type="submit" name="submit" class="submit action-button" value="Submit"/>
-          </fieldset>
-      </form>
-
+<form  [formGroup]="registerForm" (ngSubmit)="registerSubmitted()"   class="border p-3 rounded-3">
+  <div class="row g-0">
+    <div class="col text-center p-2 mb-3 bg-light">
+      <span class="fs-3">Registration form</span>
+    </div>
   </div>
+  <div class="row">
+      <div class="col mb-3" >
+        <label for="firstname" class="form-label">First name</label>
+        <input type="text" class="form-control" id="firstname" formControlName="firstname">
+
+        <div class="form-text text-danger" *ngIf="FirstName.errors?.['required'] && (FirstName.dirty || FirstName.touched)"> FirstName is required</div>
+        <div class="form-text text-danger" *ngIf="FirstName.errors?.['minlength'] && (FirstName.dirty || FirstName.touched)"> FirstName is should be atleast 2 charcters"</div>
+        <div class="form-text text-danger" *ngIf="FirstName.errors?.['pattern'] && (FirstName.dirty || FirstName.touched)"> firstname starts with an alphabet</div>
+      </div>
+      <div class="col mb-3" >
+        <label for="lastname" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lastname" formControlName="lastname">
+        <div class="form-text text-danger" *ngIf="LastName.errors?.['required'] && (LastName.dirty || LastName.touched)"> Lastname is required</div>
+        <div class="form-text text-danger" *ngIf="LastName.errors?.['minlength'] && (LastName.dirty || LastName.touched)"> Lastname is should be atleast 1 charcters"</div>
+        <div class="form-text text-danger" *ngIf="LastName.errors?.['pattern'] && (LastName.dirty || LastName.touched)"> Lastname starts with an alphabet</div>
+      </div>
+  </div>
+  <div class="row">
+   
+
+    <div class="col mb-3" >
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email">
+    </div>
+    <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)"> Email is required</div>
+    <div class="form-text text-danger" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)"> Email is invalid</div>
+  </div>
+  <div class="row">
+
+    <div class="col mb-3" >
+      <label for="mobile" class="form-label">Mobile Number</label>
+      <input type="text" class="form-control" id="mobile" formControlName="mobile">
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['required'] && (Mobile.dirty || Mobile.touched)"> Mobile number is required</div>
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['pattern'] && (Mobile.dirty || Mobile.touched)"> Mobile number is required</div>
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['minlength'] || Mobile.errors?.['maxlength'] && (Mobile.dirty || Mobile.touched)" > Mobile Nmber is shoud be atleast 10 charcters</div>
+    </div>
+
+    <div class="col ps-3 mb-3">
+      <div class="m-1">Gender</div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" value="male" id="male" formControlName="gender">
+        <label for="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" value="female" id="female"  formControlName="gender">
+        <label for="form-check-label" for="female">Female</label>
+      </div>
+      <div class="form-text text-danger" *ngIf="Gender.errors?.['required']  "> Select a gender</div>
+
+    </div>
+</div>
+<div class="row">
+  <div class="col mb-3" >
+    <label for="pwd" class="form-label">Password</label>
+    <input type="password" class="form-control" id="pwd" formControlName="pwd">
+    
+    <div class="form-text text-danger" *ngIf="PWD.errors?.['required'] && (PWD.dirty || PWD.touched)"> Password is required</div>
+    </div>
+    <div class="form-text text-danger" *ngIf="PWD.errors?.['minlength'] || PWD.errors?.['maxlength'] && (PWD.dirty || PWD.touched)" > Enter atleast 6 charcters</div>
+ 
+    
+  </div>
+  <div class="row">
+    <div class="col mb-3" >
+      <label for="cpwd" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" id="cpwd" formControlName="cpwd">
+      <div class="form-text text-danger" *ngIf="CPWD.errors?.['required'] && (CPWD.dirty || CPWD.touched)"> Password is required</div>
+      <div class="form-text text-danger" *ngIf="conpass==true"> enter a correct password</div>
+  </div>
+</div>
+<div class="row" >
+  <div class="col-6 offset-3">
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">submit</button>
+    </div>
+  </div>
+</div>
+
+</form>
 </div>
